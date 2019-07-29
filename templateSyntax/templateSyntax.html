@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TemplateSyntax</title>
+    <style>
+        #red {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+        }
+        #list-1 {
+            width: 50px;
+            height: 50px;
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 文本 -->
+        <span>Message: {{msg}}</span>
+        <br><br>
+        <!-- v-once指令 -->
+        <span v-once>这个将不会改变: {{ msg }}</span>
+        <!-- 原始HTML v-html -->
+        <p>Using v-html directive: <span v-html="rawHtml"></span></p>
+        <!-- HTML特性 -->
+        <div v-bind:id="dynamicId"></div>
+        <!-- 布尔特性 -->
+        <button v-bind:disabled="isButtonDisabled">Button</button>
+        <!-- Javascript表达式 -->
+        <p>Number: {{ number + 1 }}</p>
+        <p>OK: {{ ok ? 'YES' : 'NO' }}</p>
+        <p>message: {{ message.split('').reverse().join('') }}</p>
+        <div v-bind:id="'list-' + id"></div>
+        <!-- v-if指令 -->
+        <p v-if="seen">Now you can see me.</p>
+        <!-- v-bind指令 缩写为 : -->
+        <a :href="url" target="_blank">www.baidu.com</a>
+        <!-- <a v-bind:href="url" target="_blank">www.baidu.com</a> -->
+        <br><br>
+        <!-- v-on指令 缩写为@ -->
+        <a @click="doSomething">click these letters.</a>
+        <!-- <a v-on:click="doSomething">click these letters.</a> -->
+        <br><br>
+        <!-- 动态参数 大写会变为小写 -->
+        <a v-on:[eventName]="doSomething"> This is a dynamic args </a>
+        <br><br>
+        <!-- 修饰符 .prevent 对于触发的事件调用 event.preventDefault() -->
+        <form v-on:submit.prevent="onSubmit">
+            <input type="submit" />
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data(){
+                return {
+                    msg: 'I am a message',
+                    rawHtml: '<span style="color:red">I am red</span>',
+                    dynamicId: 'red',
+                    isButtonDisabled: true,
+                    number: 17,
+                    ok: false,
+                    message: 'this is a message',
+                    id: 1,
+                    seen: true,
+                    url: 'http://www.baidu.com',
+                    doSomething: function() {
+                        alert('You click me.');
+                    },
+                    eventname: 'click',
+                    onSubmit: function() {
+                        alert('You submit');
+                    }
+                }
+            } 
+        });
+    </script>
+</body>
+</html>
