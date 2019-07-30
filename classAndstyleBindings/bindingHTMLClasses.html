@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Binding HTML Classes</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 对象语法 -->
+        <div class="static" v-bind:class="{ active: isActive, 'text-danger': hasError }"></div>
+        <!-- 数据对象可以是一个object -->
+        <div class="static" v-bind:class="classObject"></div>
+        <!-- 绑定一个返回对象的计算属性 -->
+        <div v-bind:class="classComputedObject"></div>
+        <!-- 数组作为class列表 -->
+        <div v-bind:class="[activeClass, errorClass]"></div>
+        <!-- 用三元表达式，根据条件切换列表中的 class -->
+        <div v-bind:class="[isActive ? activeClass : '', errorClass]"></div>
+        <!-- 在数组语法中使用对象语法 -->
+        <div v-bind:class="[{ active: isActive }, errorClass]"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                isActive: true,
+                hasError: false,
+                error: null,
+                classObject: {
+                     active: true,
+                    'text-danger': false
+                },
+                activeClass: 'active',
+                errorClass: 'text-danger'
+            },
+            computed: {
+                classComputedObject: function () {
+                    return {
+                    active: this.isActive && !this.error,
+                    'text-danger': this.error && this.error.type === 'fatal'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
