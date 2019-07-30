@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Computed Properties</title>
+</head>
+<body>
+    <div id="app">
+            <p>Original message: {{ message }}</p>
+            <p>Computed reversed message: {{ reversedMessageByComputed }}</p>
+            <p>Method reversed message: {{ reversedMessageByMethod() }}</p>
+            <p>fullName by watchers: {{fullName}}</p>
+            <p>fullName by computed: {{fullNameByComputed}}</p>
+            <button @click="changeFullName">Click me to Change</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                message: 'hello',
+                firstName: 'Foo',
+                lastName: 'Bar',
+                fullName: 'Foo Bar',
+                firstNameByCom: 'Foo',
+                lastNameByCom: 'Bar',
+                changeFullName: function() {
+                    vm.fullNameByComputed = 'John Doe';
+                    vm.firstName = 'Jhon';
+                }
+            },
+            // 计算属性缓存
+            computed: {
+                // 计算属性的getter
+                // 计算属性是基于它们的响应式依赖进行缓存的
+                // reversedMessageByComputed依赖于message，当vm.message改变时，所有依赖vm.reversedMessageByComputed的绑定也会更新
+                reversedMessageByComputed: function() {
+                    // this 指向 vm 实例
+                    return this.message.split('').reverse().join('');
+                },
+                fullNameByComputed: {
+                    // getter
+                    get: function () {
+                        return this.firstNameByCom + ' ' + this.lastNameByCom;
+                    },
+                    // setter
+                    set: function(newValue) {
+                        var names = newValue.split(' ');
+                        this.firstNameByCom = names[0];
+                        this.lastNameByCom = names[names.length - 1];
+                    }
+                }
+            },
+            // 不希望有缓存时，可以用方法替代
+            methods: {
+                reversedMessageByMethod: function() {
+                    return this.message.split('').reverse().join('');
+                }
+            },
+            // 侦听属性
+            watch: {
+                firstName: function (val) {
+                    this.fullName = val + ' ' + this.lastName;
+                },
+                lastName: function (val) {
+                    this.fullName = this.firstName + ' ' + val;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
