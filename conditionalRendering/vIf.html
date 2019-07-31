@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-if</title>
+</head>
+<body>
+    <div id="app">
+        <button @click="changeAwesome()">click to change awesome</button>
+        <!-- v-if 只会在指令的表达式返回 truthy 值的时候被渲染 -->
+        <h1 v-if="awesome">Vue is awesome!</h1>
+        <!-- v=else 表示 v-if 的“else 块” -->
+        <h1 v-else>Oh no 😢</h1>
+        <!-- 在 <template> 元素上使用 v-if 条件渲染分组 -->
+        <template v-if="ok">
+            <h1>Title</h1>
+            <p>Paragraph 1</p>
+            <p>Paragraph 2</p>
+        </template>
+        <!-- v-else-if 充当 v-if 的“else-if 块” 2.1.0+ -->
+        <div v-if="type === 'A'">A</div>
+        <div v-else-if="type === 'B'">B</div>
+        <div v-else>Not A/B</div>
+        <br>
+        <!-- 用 key 管理可复用的元素 eg:input -->
+        <template v-if="loginType === 'username'">
+            <label>Username</label>
+            <input placeholder="Enter your username" key="username-input">
+        </template>
+        <template v-else>
+            <label>Email</label>
+            <input placeholder="Enter your email address" key="email-input">
+        </template>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                awesome: true,
+                ok: true,
+                type: 'B',
+                loginType: 'username'
+            },
+            methods: {
+                changeAwesome: function() {
+                    vm.awesome = !vm.awesome;
+                    vm.ok = !vm.ok;
+                    if(vm.type == 'B') {
+                        vm.type = '';
+                    } else {
+                        vm.type = 'B';
+                    }
+                    if(vm.loginType == 'username') {
+                        vm.loginType = '';
+                    } else {
+                        vm.loginType = 'username';
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
