@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Array Change Detection</title>
+</head>
+<body>
+    <div id="app">
+        <div v-for="item in items" v-bind:key="item.id">{{item.name}}</div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        /*
+        Vue 将被侦听的数组的变异方法进行了包裹，所以它们也将会触发视图更新。这些被包裹过的方法包括：
+        push()
+        pop()
+        shift()
+        unshift()
+        splice()
+        sort()
+        reverse()
+        */
+        var vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    items: [
+                        {id: 1, name: '1'},
+                        {id: 2, name: '2'}
+                    ]
+                } 
+            }
+        });
+        // 变异方法
+        // app.items.pop();
+
+        // 非变异方法 替换数组 不会改变原始数组，而总是返回一个新数组
+        // app.items = app.items.filter(function (item) {
+        //     return item.name.match(/1/);
+        // })
+        /*
+        利用索引直接设置一个数组项: Vue.set(vm.items, indexOfItem, newValue) || vm.items.splice(indexOfItem, 1, newValue)
+        修改数组的长度: vm.items.splice(newLength)
+        */
+    </script>
+</body>
+</html>

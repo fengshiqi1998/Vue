@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-for</title>
+</head>
+<body>
+    <div id="app">
+        <!-- v-for 指令需要使用 item in items 形式的特殊语法，其中 items 是源数据数组，而 item 则是被迭代的数组元素的别名 -->
+        <ul>
+            <li v-for="item in items1">
+                {{ item.message }}
+            </li>
+            <!-- 可以用 of 替代 in 作为分隔符 -->
+            <li v-for="item of items1">
+                {{ item.message }}
+            </li>
+        </ul>
+        <!-- 在 v-for 块中可以访问所有父作用域的属性。v-for 还支持一个可选的第二个参数，即当前项的索引。 -->
+        <ul>
+            <li v-for="(item, index) in items2">
+                {{ parentMessage }} - {{ index }} - {{ item.message }}
+            </li>
+        </ul>
+        <!-- 可以用 v-for 来遍历一个对象的属性 -->
+        <ul>
+            <li v-for="value in object">
+                {{ value }}
+            </li>
+            <!-- 可以提供第二个的参数为 property 名称 (也就是键名) -->
+            <li v-for="(value, name) in object">
+                {{name}}: {{ value }}
+            </li>
+            <!-- 可以用第三个参数作为索引 -->
+            <li v-for="(value, name, index) in object">
+                {{index}}.{{name}}: {{ value }}
+            </li>
+        </ul>
+        <!-- 在遍历对象时，会按 Object.keys() 的结果遍历，但是不能保证它的结果在不同的 JavaScript 引擎下都一致。 -->
+
+        <!-- 创建一个计算属性，来返回过滤或排序后的数组 -->
+        <ul>
+            <li v-for="n in evenNumbers">{{ n }}</li>
+        </ul>
+        <!-- 计算属性不适用的情况下 (例如，在嵌套 v-for 循环中)  -->
+        <ul>
+            <li v-for="n in even(numbers)">{{ n }}</li>
+        </ul>
+        <!-- 在 v-for 里使用值范围 -->
+        <span v-for="n in 10">{{ n }} </span>
+        <!-- 利用带有 v-for 的 <template> 来循环渲染一段包含多个元素的内容 -->
+        <ul>
+            <template v-for="item in items1">
+                <li>{{ item.msg }}</li>
+            </template>
+        </ul>
+        <!-- v-for 与 v-if 一同使用 （不推荐） -->
+        <!-- 处于同一节点时v-for 的优先级比 v-if 更高，这意味着 v-if 将分别重复运行于每个 v-for 循环中 -->
+        <li v-for="todo in todos" v-if="!todo.isComplete">
+            {{ todo }}
+        </li>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                items1: [
+                    { message: 'Foo' },
+                    { message: 'Bar' }
+                ],
+                parentMessage: 'Parent',
+                items2: [
+                    { message: 'Foo' },
+                    { message: 'Bar' }
+                ],
+                object: {
+                    title: 'How to do lists in Vue',
+                    author: 'Jane Doe',
+                    publishedAt: '2016-04-10'
+                },
+                numbers: [ 1, 2, 3, 4, 5 ],
+                todos: [
+                    {id: 1, isComplete: true},
+                    {id: 2, isComplete: false},
+                    {id: 3, isComplete: false},
+                ]
+            },
+            computed: {
+                evenNumbers: function () {
+                    return this.numbers.filter(function (number) {
+                        return number % 2 === 0
+                    })
+                }
+            },
+            methods: {
+                even: function (numbers) {
+                    return numbers.filter(function (number) {
+                    return number % 2 === 1
+                })
+            }
+}
+        });
+        // 向嵌套对象添加响应式属性
+        Vue.set(vm.object, 'age', 27)
+        vm.$set(vm.object, 'message', 'Foo')
+
+        // 为已有对象赋值多个新属性，添加新的响应式属性
+        vm.object = Object.assign({}, vm.object, {
+            project: 'obProject',
+            favoriteColor: 'Vue Green'
+        })
+    </script>
+</body>
+</html>
