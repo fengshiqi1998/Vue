@@ -1,2 +1,2 @@
 # Vue
-learning vuejs
+尝试只通过官方文档，从0开始学习Vue。
