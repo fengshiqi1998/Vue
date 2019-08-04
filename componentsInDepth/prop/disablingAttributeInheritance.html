@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+  <!-- inheritAttrs: false 选项不会影响 style 和 class 的绑定。 -->
+  <div id="app">
+      <base-input1
+        label="inheritAttrs:false&&v-bind='$attrs': "
+        class="username-input"
+        placeholder="Enter your username"
+        data-date-picker="activated"
+      ></base-input1>
+      <br>
+      <base-input2
+        label="v-bind='$attrs': "
+        class="username-input"
+        placeholder="Enter your username"
+        data-date-picker="activated"
+      ></base-input2>
+      <br>
+      <base-input3
+        label="no one: "
+        class="username-input"
+        placeholder="Enter your username"
+        data-date-picker="activated"
+      ></base-input3>
+      <br>
+      <base-input4
+        label="inheritAttrs:false: "
+        class="username-input"
+        placeholder="Enter your username"
+        data-date-picker="activated"
+      ></base-input4>
+      <br>
+      <base-input5
+        label="inheritAttrs:false&&(v-bind='$attrs'on the label): "
+        class="username-input"
+        placeholder="Enter your username"
+        data-date-picker="activated"
+      ></base-input5>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script>
+    Vue.component("base-input1", {
+      inheritAttrs: false, //此处设置禁用继承特性
+      props: ["label"],
+      template: `
+        <label>
+          {{ label }}
+          <input
+            v-bind="$attrs"
+          >
+        </label>
+      `,
+      mounted: function() {
+        console.log(this.$attrs);
+      }
+    });
+    // $attrs使input继承了父组件的属性
+    Vue.component("base-input2", {
+      // inheritAttrs: false, // 注释后
+      props: ["label"],
+      template: `
+        <label>
+          {{ label }}
+          <input
+            v-bind="$attrs"
+          >
+        </label>
+      `,
+      mounted: function() {
+        console.log(this.$attrs);
+      }
+    });
+    Vue.component("base-input3", {
+      props: ["label"],
+      template: `
+        <label>
+          {{ label }}
+          <input />
+        </label>
+      `,
+      mounted: function() {
+        console.log(this.$attrs);
+      }
+    });
+    Vue.component("base-input4", {
+      inheritAttrs: false, //此处设置禁用继承特性
+      props: ["label"],
+      template: `
+        <label>
+          {{ label }}
+          <input />
+        </label>
+      `,
+      mounted: function() {
+        console.log(this.$attrs);
+      }
+    });
+    Vue.component("base-input5", {
+      inheritAttrs: false, //此处设置禁用继承特性
+      props: ["label"],
+      template: `
+        <label v-bind="$attrs>
+          {{ label }}
+          <input />
+        </label>
+      `,
+      mounted: function() {
+        console.log(this.$attrs);
+      }
+    });
+
+    var vm = new Vue({
+      el: '#app',
+      data: {
+
+      }
+    })
+  </script>
+</body>
+</html>
