@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Component Registration</title>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            components: {
+                'component-a': ComponentA,
+                'component-b': ComponentB
+            }
+        });
+        // 使用 kebab-case定义组件名
+        Vue.component('my-component-name', { /* ... */ });
+        // 使用 PascalCase定义组件名
+        Vue.component('MyComponentName', { /* ... */ });
+        // 当使用 PascalCase (首字母大写命名) 定义一个组件时，<my-component-name> 和 <MyComponentName> 都是使用的
+        // 直接在 DOM (即非字符串的模板) 中使用时只有 kebab-case 是有效的
+        // 以上这些组件是全局注册的。也就是说它们在注册之后可以用在任何新创建的 Vue 根实例 (new Vue) 的模板中。在所有子组件中也是如此，也就是说这三个组件在各自内部也都可以相互使用。
+        // 局部注册
+        var ComponentA = { /* ... */ }
+        var ComponentB = { /* ... */ }
+        // 局部注册的组件在其子组件中不可用  如果希望 ComponentA 在 ComponentB 中可用
+        /*
+            var ComponentB = {
+                components: {
+                    'component-a': ComponentA
+                },
+                // ...
+            }
+        */
+    </script>
+</body>
+</html>
