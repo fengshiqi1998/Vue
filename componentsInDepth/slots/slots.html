@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Slots</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 插槽内可以包含任何模板代码，包括 HTML 甚至其它的组件 -->
+        <navigation-link url="/profile">
+            <!-- 添加一个 Font Awesome 图标 -->
+            <span class="fa fa-user">span</span>
+            <!-- 添加一个图标的组件 -->
+            <font-awesome-icon name="user"></font-awesome-icon>
+            Your Profile
+        </navigation-link>
+        <!-- 编译作用域 -->
+        <!--
+
+        <navigation-link url="/profile">
+             父级模板里的所有内容都是在父级作用域中编译的；子模板里的所有内容都是在子作用域中编译的。 
+            Clicking here will send you to: {{ url }} => ReferenceError: url is not defined
+            
+            这里的 `url` 会是 undefined，因为 "/profile" 是
+            _传递给_ <navigation-link> 的而不是
+            在 <navigation-link> 组件*内部*定义的。
+            
+        </navigation-link>
+
+        -->
+        <!-- 后备内容 -->
+        <br>
+        <submit-button></submit-button>
+        <br>
+        <submit-button>Save</submit-button>
+        <!-- 具名插槽 -->
+        <br>
+        <base-layout>
+            <!-- 在一个 <template> 元素上使用 v-slot 指令，并以 v-slot 的参数的形式提供其名称，向具名插槽提供内容 -->
+            <template v-slot:header>
+                <h1>Here might be a page title</h1>
+            </template>
+            <!-- 现在 <template> 元素中的所有内容都将会被传入相应的插槽。任何没有被包裹在带有 v-slot 的 <template> 中的内容都会被视为默认插槽的内容。 -->
+            <p>A paragraph for the main content.</p>
+            <!-- 仍然可以在一个 <template> 中包裹默认插槽的内容 -->
+            <template v-slot:default>
+                <p>And another one.</p>
+            </template>
+            <template v-slot:footer>
+                <p>Here's some contact info</p>
+            </template>
+        </base-layout>
+        <current-user>
+            <template v-slot:default="slotProps">
+                {{ slotProps.user.firstName }}
+            </template>
+        </current-user>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        Vue.component('navigation-link', {
+            props: ['url'],
+            template: `
+                <a
+                v-bind:href="url"
+                class="nav-link"
+                >
+                <slot></slot>
+                </a>
+            `
+        });
+        Vue.component('submit-button', {
+            template: `
+            <button type="submit">
+                <slot>Submit</slot>
+            </button>
+            `
+        })
+        // <slot> 元素有一个特殊的特性：name。这个特性可以用来定义额外的插槽
+        Vue.component('base-layout', {
+            template: `
+            <div class="container">
+                <header>
+                    <slot name="header"></slot>
+                </header>
+                <main>
+                    <!-- 一个不带 name 的 <slot> 出口会带有隐含的名字“default” -->
+                    <slot></slot>
+                </main>
+                <footer>
+                    <slot name="footer"></slot>
+                </footer>
+            </div>
+            `
+        })
+        // 作用域插槽
+        Vue.component('current-user', {
+            props: ['user'],
+            template: `
+            <span>
+                <!-- 将 user 作为 <slot> 元素的一个特性绑定上，让 user 在父级的插槽内容中可用 -->
+                <slot v-bind:user="user">
+                    {{ user.lastName }}
+                </slot>
+            </span>
+            `
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                slotProps: {
+                    user: {
+                        firstName: 'first name',
+                        lastName: 'last name'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
