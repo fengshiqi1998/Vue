@@ -8,10 +8,23 @@
 </head>
 <body>
     <div id="app">
-
+        <current-user>
+            <template v-slot:default="slotProps">
+                {{ slotProps.user.firstName }}
+            </template>
+        </current-user>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script>
+        Vue.component('current-user', {
+            template: `
+            <span>
+                <slot v-bind:user="user">
+                    {{ user.lastName }}
+                </slot>
+            </span>
+            `
+        });
         var vm = new Vue({
             el: '#app'
         });
