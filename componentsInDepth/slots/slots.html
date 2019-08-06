@@ -45,7 +45,8 @@
             <!-- 现在 <template> 元素中的所有内容都将会被传入相应的插槽。任何没有被包裹在带有 v-slot 的 <template> 中的内容都会被视为默认插槽的内容。 -->
             <p>A paragraph for the main content.</p>
             <!-- 仍然可以在一个 <template> 中包裹默认插槽的内容 -->
-            <template v-slot:default>
+            <!-- 具名插槽的缩写 2.6.0+ -->
+            <template #default>
                 <p>And another one.</p>
             </template>
             <template v-slot:footer>
@@ -107,6 +108,7 @@
             </span>
             `
         })
+
 
         var vm = new Vue({
             el: '#app',
