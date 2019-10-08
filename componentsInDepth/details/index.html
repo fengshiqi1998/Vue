@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件中的使用细节</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="app">
+    	<table>
+    		<tbody>
+    			<!-- 使用is解决一些bug问题 eg：table和tr，ul和ol，select和option -->
+    			<tr is="row"></tr>
+    			<tr is="row"></tr>
+    			<tr is="row"></tr>
+    		</tbody>
+    	</table>
+    	<!-- 引用 -->
+    	<div ref="hello" @click="handleClick">hello world</div>
+
+    	<!-- 计数器 发布订阅模式 -->
+    	<counter ref="one" @change="handleChange"></counter>
+    	<counter ref="two" @change="handleChange"></counter>
+    	<div>{{total}}</div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+    	Vue.component('row', {
+    		// 子组件的data必须是一个函数
+    		data: function() {
+    			return {
+    				content: 'this is a row'
+    			}
+    		},
+    		template: '<tr><td>{{content}}</td></tr>'
+    	})
+
+    	Vue.component('counter', {
+    		template: '<div @click="handleClicked">{{number}}</div>',
+    		data: function() {
+    			return {
+    				number: 0
+    			}
+    		},
+    		methods: {
+    			handleClicked: function() {
+    				this.number++;
+    				this.$emit('change')// 子组件向父组件传值
+    			}
+    		}
+    	})
+
+    	var vm = new Vue({
+    		el: '#app',
+    		data: {
+    			total: 0
+    		},
+    		methods: {
+    			handleClick: function() {
+    				// ref获取dom节点
+    				console.log(this.$refs.hello);
+    				console.log(this.$refs.hello.innerHTML);
+    			},
+    			handleChange: function() {
+    				this.total = this.$refs.one.number + this.$refs.two.number;// 此时refs获取到的是子组件的引用
+    			}
+    		}
+    		
+    	})
+    </script>
+</body>
+</html>

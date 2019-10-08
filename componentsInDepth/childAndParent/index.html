@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>父子组件间的传值</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="app">
+    	<counter :count="0" @inc="handleIncrease"></counter>
+    	<counter :count="1" @inc="handleIncrease"></counter>
+    	<div>{{total}}</div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+		var counter = {
+			props: ['count'],
+			data: function() {
+				return {
+					number: this.count// 将父组件的数据赋值给子组件
+				}
+			},
+			template: '<div @click="handleClick">{{number}}</div>',
+			methods: {
+				handleClick: function() {
+					// 父组件数据单向传递给子组件数据，子组件禁止修改父组件数据
+					this.number++;
+					// 子组件向父组件触发事件
+					this.$emit('inc', 1);// 事件名（自定义） 参数（可以有多个）
+				}
+			}
+		};
+    	var vm = new Vue({
+    		el: '#app',
+    		components: {
+    			counter: counter
+    		},
+    		data: {
+    			total: 0
+    		},
+    		methods: {
+    			handleIncrease: function(step) {
+    				this.total += step;
+    			}
+    		}
+    		
+    	})
+    </script>
+</body>
+</html>
