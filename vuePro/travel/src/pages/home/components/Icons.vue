@@ -15,53 +15,14 @@
 <script>
 export default {
   name: 'HomeIcons',
+  props: {
+    list: Array
+  },
   data () {
     return {
-      list: [{
-        id: '001',
-        imgUrl: '',
-        desc: '景点门票'
-      },
-      {
-        id: '002',
-        imgUrl: '',
-        desc: '滑雪季'
-      },
-      {
-        id: '003',
-        imgUrl: '',
-        desc: '泡温泉'
-      },
-      {
-        id: '004',
-        imgUrl: '',
-        desc: '动植园'
-      },
-      {
-        id: '005',
-        imgUrl: '',
-        desc: '景点门票'
-      },
-      {
-        id: '006',
-        imgUrl: '',
-        desc: '滑雪季'
-      },
-      {
-        id: '007',
-        imgUrl: '',
-        desc: '泡温泉'
-      },
-      {
-        id: '008',
-        imgUrl: '',
-        desc: '动植园'
-      },
-      {
-        id: '009',
-        imgUrl: '',
-        desc: '一日游'
-      }]
+      swiperOption: {
+        autoplay: false
+      }
     }
   },
   computed: {
@@ -115,4 +76,5 @@ export default {
                 line-height: .44rem
                 text-align: center
                 color: $darkTextColor
+                ellipsis()
 </style>

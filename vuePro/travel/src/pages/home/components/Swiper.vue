@@ -1,9 +1,9 @@
 <template>
 <div class="wrapper">
-  <swiper :options="swiperOption">
+  <swiper :options="swiperOption" v-if="showSwiper">
     <!-- slides -->
     <swiper-slide v-for="item of list" :key="item.id">
-        <img :src="item.imgUrl" alt="" class="swiper-img">
+      <img :src="item.imgUrl" alt="" class="swiper-img">
     </swiper-slide>
     <!-- Optional controls -->
     <div class="swiper-pagination"  slot="pagination"></div>
@@ -18,16 +18,11 @@ export default {
       swiperOption: {
         pagination: '.swiper-pagination',
         loop: true
-      },
-      list: [{
-        id: '001',
-        imgUrl: ''
-      },
-      {
-        id: '002',
-        imgUrl: ''
-      }]
+      }
     }
+  },
+  props: {
+    list: Array
   },
   computed: {
     showSwiper () {
@@ -38,7 +33,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
     .wrapper >>> .swiper-pagination-bullet-active
-        background: #fff
+      background: #fff
     .wrapper
         overflow: hidden
         width: 100%
