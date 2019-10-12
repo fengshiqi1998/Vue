@@ -1,0 +1,26 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312"> <title>请看状态栏的变化</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0"> <script Language="JavaScript">
+var msg = "欢迎你 我的朋友 让我们在 JavaScript 的世界中自由翱翔吧 " ; var interval = 100
+var spacelen = 120;
+var space10=" ";
+var seq=0;
+function scrollstr()
+{
+len = msg.length;
+window.status = msg.substring(0, seq+1); seq++;
+if ( seq >= len ) {
+seq = 0;
+window.status = ''; window.setTimeout("scrollstr();", interval );
+}
+else {
+window.setTimeout("scrollstr();", interval );
+}
+}
+scrollstr();
+</script>
+</head>
+<body>
+<p align="center"><big><strong><font color="#0000FF" face="楷体_GB2312"><big><big>请看状态 栏的变化</big></big></font></strong></big></p>
+</body> </html>
