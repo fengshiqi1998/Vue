@@ -5,10 +5,86 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Factory</title>
+  <style>
+    pre {
+      background-color: #302929;
+      color: #1fa01f;
+    }
+  </style>
 </head>
 <body>
+  <article>
+    <section>
+      <span>
+        class语法糖实现
+      </span>
+      <pre>
+        class Factory {
+          createOS() {
+            console.log('undefined OS');
+            throw new Error('can not dispatch function in class Factory directory.');
+          }
+        }
+        class Android extends Factory {
+          // 不重写就会使用Factory的方法
+          createOS() {
+            console.log('Android OS');
+          }
+        }
+      </pre>
+    </section>
+    <section>
+      <span>
+        ES5实现
+      </span>
+      <pre>
+        function Factory() {
+          this.createOS = function() {
+            console.log('undefined OS');
+            throw new Error('can not dispatch function in class Factory directory.');
+          }
+        }
+        function Android() {
+          Factory.call(this);
+          this.createOS = function() {
+            console.log('Android OS');
+          }
+        }
+      </pre>
+    </section>
+    <section>
+      <span>实现结果请查看控制台</span>
+    </section>
+  </article>
   <script>
-    
+/*
+    // class语法糖实现
+    class Factory {
+      createOS() {
+        console.log('undefined OS');
+        throw new Error('can not dispatch function in class Factory directory.');
+      }
+    }
+    class Android extends Factory {
+      // 不重写就会使用Factory的方法
+      createOS() {
+        console.log('Android OS');
+      }
+    }
+*/
+    // ES5实现
+    function Factory() {
+      this.createOS = function() {
+        console.log('undefined OS');
+        throw new Error('can not dispatch function in class Factory directory.');
+      }
+    }
+    function Android() {
+      Factory.call(this);
+      this.createOS = function() {
+        console.log('Android OS');
+      }
+    }
   </script>
 </body>
 </html>
