@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Singleton</title>
+</head>
+<body>
+  <script>
+/*
+    // 类语法糖实现
+    class Singleton {
+      static count = 0;
+      static instance = null;
+      show() {
+        console.log('count: ', Singleton.count);
+      }
+      static getInstance() {
+        if(this.instance === null) {
+          this.instance = new Singleton();
+          this.count++;
+        }
+        console.log(this.count);
+        return this.instance;
+      }
+    }
+    let a = Singleton.getInstance().show();
+    console.log('------');
+    let b = Singleton.getInstance().show();
+*/
+    // 闭包实现
+    function Singleton() {
+      this.show = function() {
+        console.log('Singleton show');
+      }
+    };
+    Singleton.getInstance = (function() {
+      let instance = null;
+      let count = 0;
+      return function() {
+        if(instance === null) {
+          instance = new Singleton();
+          count++;
+        }
+        console.log('count: ',count);
+        return instance;
+      }
+    })();
+    let a = Singleton.getInstance();
+    console.log('------');
+    let b = Singleton.getInstance();
+    
+  </script>
+</body>
+</html>
