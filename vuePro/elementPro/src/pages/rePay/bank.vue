@@ -1,9 +1,9 @@
 <template>
-  <div :rules="rules">
+  <el-form :rules="rules">
     <el-form-item label="活动名称" prop="name">
       <el-input v-model="form.name"></el-input>
     </el-form-item>
-  </div>
+  </el-form>
 </template>
 <script>
 export default {
@@ -15,6 +15,14 @@ export default {
       rules: {
         name: [{required: true, message: 'please input', trigger: 'blur'}]
       }
+    }
+  },
+  methods: {
+    // getFormData () {
+    //   this.$emit('func',this.msg)
+    // }
+    func () {
+      console.log('func');
     }
   }
 }
