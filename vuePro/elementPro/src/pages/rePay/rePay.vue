@@ -18,13 +18,13 @@
       <el-checkbox label="线下主题活动" name="type"></el-checkbox>
       <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
     </el-checkbox-group>
-  </el-form-item>
+  </el-form-item> -->
   <el-form-item label="特殊资源">
     <el-radio-group v-model="form.resource">
       <el-radio label="线上品牌商赞助"></el-radio>
       <el-radio label="线下场地免费"></el-radio>
     </el-radio-group>
-  </el-form-item> -->
+  </el-form-item>
   <el-form-item label="活动形式" prop="active">
     <el-input type="textarea" v-model="form.desc"></el-input>
   </el-form-item>
@@ -63,11 +63,11 @@ export default {
   },
   methods: {
     onSubmit () {
-      this.$refs.bank.func();
+      this.$refs.bank.func()
       console.log('submit!')
     },
-    showMessageFromChild(data) {
-      console.log(data);
+    showMessageFromChild (data) {
+      console.log(data)
     }
     // getFormData(data) {
     //   console.log(data);

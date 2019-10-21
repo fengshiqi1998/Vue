@@ -22,7 +22,7 @@ export default {
     //   this.$emit('func',this.msg)
     // }
     func () {
-      console.log('func');
+      console.log('func')
     }
   }
 }
