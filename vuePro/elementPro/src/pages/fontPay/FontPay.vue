@@ -52,7 +52,7 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary">查询</el-button>
+          <el-button type="primary" @click="clickFun">查询</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -241,6 +241,16 @@ export default {
         lastConfirmTime: '20190101',
         worker: 'asdadad'
       }]
+    }
+  },
+  methods: {
+    async clickFun () {
+      let a = await this.$confirm('msg', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).catch(() => 'err')
+      console.log(a)
     }
   }
 }
