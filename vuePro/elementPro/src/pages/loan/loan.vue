@@ -7,7 +7,7 @@
     :loan-channel="loanChannel"
     :channel-status="channelStatus"
     @searchForm="searchForm"
-    @addHandle="addHandle"
+    @addChannel="addChannel"
     @modifyHandle="modifyHandle"></filter-wrap>
     <!-- 表格展示 -->
     <table-wrap></table-wrap>
@@ -30,6 +30,7 @@
       :visible="handleDialogShow"
       @close="closeHandleDiaolog"
     >
+      <add-loan ref="handleRef"></add-loan>
     </el-dialog>
   </common-block>
 </template>
@@ -37,13 +38,15 @@
 import commonBlock from '@/components/common-block.vue'
 import filterWrap from '@/components/loan/filter.vue'
 import tableWrap from '@/components/loan/table.vue'
+import addLoan from '@/components/loan/add-loan.vue'
 
 export default {
   name: 'Loan',
   components: {
     commonBlock,
     filterWrap,
-    tableWrap
+    tableWrap,
+    addLoan
   },
   data () {
     return {
@@ -52,6 +55,8 @@ export default {
       totalCount: 100,
       searchData: {},
       // modal
+      handleType: '',
+      handleTitle: '',
       handleDialogShow: false,
       modifyDialogShow: false,
       // fliter
@@ -82,10 +87,10 @@ export default {
       // this.getList()
     },
     // 新建还款方式
-    addHandle () {
+    addChannel () {
       this.handleDialogShow = true
-      this.handleType = 'add'
-      this.handleTitle = 'Add'
+      this.handleType = 'add_channel'
+      this.handleTitle = '新增渠道'
     },
     // 编辑还款方式
     editHandle (row) {

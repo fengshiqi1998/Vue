@@ -42,7 +42,7 @@
     </el-form-item>
     <el-form-item>
       <el-button type="primary" size="small" @click="$emit('searchForm')">查询</el-button>
-      <el-button size="small" @click="$emit('addHandle')">新建</el-button>
+      <el-button size="small" @click="$emit('addChannel')">新增渠道</el-button>
       <el-button size="small" @click="$emit('modifyHandle')">修改</el-button>
     </el-form-item>
   </el-form>
